@@ -13,7 +13,8 @@ import {
   Clock,
   Package,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  TrendingUp
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -27,61 +28,74 @@ export function Dashboard({ onNavigate }: DashboardProps) {
     {
       id: 1,
       type: 'lost',
-      item: 'Phone',
-      time: '2 hours ago',
+      item: 'iPhone 15',
+      time: '2h ago',
       status: 'searching',
-      route: 'Bus #42'
+      route: 'Metro Line 2'
     },
     {
       id: 2,
-      type: 'found',
-      item: 'Wallet',
-      time: '1 day ago',
+      type: 'match',
+      item: 'Black Wallet',
+      time: '1d ago',
       status: 'matched',
-      route: 'Metro Line 2'
+      route: 'Bus #42'
     },
     {
       id: 3,
       type: 'claim',
       item: 'Backpack',
-      time: '3 days ago',
+      time: '3d ago',
       status: 'completed',
-      route: 'Bus #15'
+      route: 'Central Station'
     }
   ];
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'searching':
-        return <Search className="w-4 h-4 text-primary" />;
+        return <Search className="w-4 h-4 text-amber-500" />;
       case 'matched':
-        return <AlertCircle className="w-4 h-4 text-orange-500" />;
+        return <AlertCircle className="w-4 h-4 text-indigo-500" />;
       case 'completed':
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
+        return <CheckCircle className="w-4 h-4 text-emerald-500" />;
       default:
-        return <Clock className="w-4 h-4 text-gray-500" />;
+        return <Clock className="w-4 h-4 text-neutral-400" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'searching':
+        return 'bg-amber-50 text-amber-700 border-amber-200';
+      case 'matched':
+        return 'bg-indigo-50 text-indigo-700 border-indigo-200';
+      case 'completed':
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      default:
+        return 'bg-neutral-50 text-neutral-600 border-neutral-200';
     }
   };
 
   const Header = () => (
-    <div className="p-6 bg-gradient-primary">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-6 bg-white border-b border-neutral-100">
+      <div className="flex items-center justify-between mb-1">
         <div className="flex items-center space-x-3">
-          <Avatar className="w-12 h-12 bg-white/20 border-2 border-white/30">
-            <div className="w-full h-full bg-white/10 rounded-full flex items-center justify-center">
-              <span className="text-white font-semibold">U</span>
+          <Avatar className="w-10 h-10 bg-neutral-100 border border-neutral-200">
+            <div className="w-full h-full bg-gradient-primary rounded-full flex items-center justify-center">
+              <span className="text-white font-semibold text-sm">U</span>
             </div>
           </Avatar>
           <div>
-            <h1 className="text-white text-xl font-bold">Good morning!</h1>
-            <p className="text-white/80 text-sm">How can we help you today?</p>
+            <h1 className="text-neutral-900 text-xl font-bold">Good morning!</h1>
+            <p className="text-neutral-500 text-sm">How can we help you today?</p>
           </div>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex space-x-1">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-white hover:bg-white/20"
+            className="text-neutral-600 hover:bg-neutral-100 h-9 w-9"
             onClick={() => onNavigate('notifications')}
           >
             <Bell className="w-5 h-5" />
@@ -89,7 +103,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-white hover:bg-white/20"
+            className="text-neutral-600 hover:bg-neutral-100 h-9 w-9"
             onClick={() => onNavigate('settings')}
           >
             <Settings className="w-5 h-5" />
@@ -101,14 +115,15 @@ export function Dashboard({ onNavigate }: DashboardProps) {
 
   return (
     <MobileLayout header={<Header />} showSafeArea={false}>
-      <div className="px-6 py-6">
+      <div className="px-6 py-8">
+        
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 gap-4 mb-8">
+        <div className="space-y-4 mb-10">
           <ActionCard
             icon={<Search />}
             title={t('reportLostItem')}
             description="Tell us what you've lost"
-            gradient="primary"
+            variant="primary"
             onClick={() => onNavigate('report-lost')}
           />
           
@@ -116,7 +131,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
             icon={<Package />}
             title={t('foundSomething')}
             description="Help someone find their item"
-            gradient="warm"
+            variant="emerald"
             onClick={() => onNavigate('report-found')}
           />
           
@@ -125,7 +140,8 @@ export function Dashboard({ onNavigate }: DashboardProps) {
               icon={<Clock />}
               title={t('trackClaim')}
               description="Check status"
-              gradient="trust"
+              variant="amber"
+              size="sm"
               onClick={() => onNavigate('track-claim')}
             />
             
@@ -133,35 +149,34 @@ export function Dashboard({ onNavigate }: DashboardProps) {
               icon={<MapPin />}
               title={t('nearbyDepots')}
               description="Find locations"
-              gradient="primary"
+              variant="rose"
+              size="sm"
               onClick={() => onNavigate('map')}
             />
           </div>
         </div>
 
         {/* Recent Activity */}
-        <div className="mb-6">
-          <h2 className="text-xl font-bold mb-4">{t('recentActivity')}</h2>
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-neutral-900 mb-5">{t('recentActivity')}</h2>
           <div className="space-y-3">
             {recentActivities.map((activity) => (
-              <Card key={activity.id} className="p-4 hover-lift">
+              <Card key={activity.id} className="p-4 hover-lift bg-white border-neutral-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-secondary rounded-full">
+                    <div className="p-2 bg-neutral-50 rounded-xl border border-neutral-200">
                       {getStatusIcon(activity.status)}
                     </div>
                     <div>
-                      <h3 className="font-medium">{activity.item}</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <h3 className="font-semibold text-neutral-900">{activity.item}</h3>
+                      <p className="text-sm text-neutral-600">
                         {activity.route} • {activity.time}
                       </p>
                     </div>
                   </div>
                   <div className={`
-                    px-2 py-1 rounded-full text-xs font-medium
-                    ${activity.status === 'completed' ? 'bg-green-100 text-green-800' :
-                      activity.status === 'matched' ? 'bg-orange-100 text-orange-800' :
-                      'bg-blue-100 text-blue-800'}
+                    px-3 py-1 rounded-full text-xs font-medium border
+                    ${getStatusColor(activity.status)}
                   `}>
                     {activity.status}
                   </div>
@@ -171,25 +186,28 @@ export function Dashboard({ onNavigate }: DashboardProps) {
           </div>
         </div>
 
-        {/* Quick Stats */}
-        <Card className="p-6 bg-gradient-trust">
-          <div className="text-center">
-            <h3 className="text-white text-lg font-semibold mb-2">
+        {/* Stats Card */}
+        <Card className="p-6 bg-white border-neutral-200 shadow-sm">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="p-2 bg-emerald-50 rounded-xl">
+              <TrendingUp className="w-5 h-5 text-emerald-600" />
+            </div>
+            <h3 className="text-neutral-900 text-lg font-semibold">
               Community Impact
             </h3>
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <div className="text-2xl font-bold text-white">1,247</div>
-                <div className="text-white/80 text-sm">Items Found</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white">96%</div>
-                <div className="text-white/80 text-sm">Success Rate</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white">24h</div>
-                <div className="text-white/80 text-sm">Avg Time</div>
-              </div>
+          </div>
+          <div className="grid grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-neutral-900 mb-1">1,247</div>
+              <div className="text-neutral-500 text-sm">Items Found</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-neutral-900 mb-1">96%</div>
+              <div className="text-neutral-500 text-sm">Success Rate</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-neutral-900 mb-1">24h</div>
+              <div className="text-neutral-500 text-sm">Avg Time</div>
             </div>
           </div>
         </Card>

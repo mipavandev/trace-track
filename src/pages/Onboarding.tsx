@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useLanguage } from '@/components/LanguageContext';
 import { MobileLayout } from '@/components/MobileLayout';
-import { MapPin, Search, Shield } from 'lucide-react';
+import { Search, Shield, Sparkles, Globe } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -19,67 +20,77 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   ];
 
   return (
-    <MobileLayout className="bg-gradient-primary">
-      <div className="px-6 py-12 min-h-screen flex flex-col justify-center">
+    <MobileLayout className="bg-white">
+      <div className="px-8 py-16 min-h-screen flex flex-col justify-center">
+        
         {/* Hero Section */}
-        <div className="text-center mb-12 animate-fade-in">
-          <div className="mb-6">
-            <div className="w-24 h-24 mx-auto bg-white/20 rounded-full flex items-center justify-center mb-4">
-              <Search className="w-12 h-12 text-white" />
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="mb-8">
+            <div className="w-20 h-20 mx-auto bg-gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+              <Search className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-4">
+          <h1 className="text-3xl font-bold text-neutral-900 mb-4 tracking-tight">
             {t('welcome')}
           </h1>
-          <p className="text-white/80 text-lg mb-8">
+          <p className="text-neutral-600 text-lg leading-relaxed">
             {t('subtitle')}
           </p>
         </div>
 
         {/* Features */}
-        <div className="grid grid-cols-1 gap-4 mb-12">
-          <Card className="p-4 bg-white/10 border-white/20 backdrop-blur-sm">
-            <div className="flex items-center space-x-3">
-              <MapPin className="w-6 h-6 text-white" />
+        <div className="space-y-4 mb-12">
+          <Card className="p-5 bg-white border-neutral-200 shadow-sm">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-indigo-600" />
+              </div>
               <div>
-                <h3 className="text-white font-medium">Real-time Tracking</h3>
-                <p className="text-white/70 text-sm">Find items across the transport network</p>
+                <h3 className="font-semibold text-neutral-900">Smart Matching</h3>
+                <p className="text-neutral-600 text-sm">AI-powered item recognition</p>
               </div>
             </div>
           </Card>
           
-          <Card className="p-4 bg-white/10 border-white/20 backdrop-blur-sm">
-            <div className="flex items-center space-x-3">
-              <Shield className="w-6 h-6 text-white" />
+          <Card className="p-5 bg-white border-neutral-200 shadow-sm">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+                <Shield className="w-5 h-5 text-emerald-600" />
+              </div>
               <div>
-                <h3 className="text-white font-medium">Secure & Private</h3>
-                <p className="text-white/70 text-sm">Your data is protected and encrypted</p>
+                <h3 className="font-semibold text-neutral-900">Secure & Private</h3>
+                <p className="text-neutral-600 text-sm">Your data is protected</p>
               </div>
             </div>
           </Card>
         </div>
 
         {/* Language Selection */}
-        <div className="mb-8">
-          <h2 className="text-white font-semibold text-lg mb-4 text-center">
-            {t('selectLanguage')}
-          </h2>
-          <div className="grid grid-cols-1 gap-3">
+        <div className="mb-10">
+          <div className="flex items-center justify-center mb-6">
+            <div className="flex items-center space-x-2">
+              <Globe className="w-5 h-5 text-neutral-600" />
+              <h2 className="font-semibold text-neutral-900">
+                {t('selectLanguage')}
+              </h2>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
             {languages.map((lang) => (
               <Button
                 key={lang.code}
-                variant={language === lang.code ? "secondary" : "outline"}
-                className={`
-                  h-14 justify-start text-left
-                  ${language === lang.code 
-                    ? 'bg-white text-primary border-white' 
-                    : 'bg-white/10 text-white border-white/30 hover:bg-white/20'
-                  }
-                `}
+                variant={language === lang.code ? "default" : "outline"}
+                className={cn(
+                  "w-full h-14 justify-start text-left border-neutral-200",
+                  language === lang.code 
+                    ? 'bg-neutral-900 text-white border-neutral-900 shadow-sm' 
+                    : 'bg-white text-neutral-900 hover:bg-neutral-50'
+                )}
                 onClick={() => setLanguage(lang.code)}
               >
                 <span className="mr-3 text-xl">{lang.flag}</span>
-                <span className="text-lg">{lang.name}</span>
+                <span className="text-base font-medium">{lang.name}</span>
               </Button>
             ))}
           </div>
@@ -88,7 +99,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
         {/* Continue Button */}
         <Button 
           onClick={onComplete}
-          className="w-full h-14 text-lg font-semibold bg-white text-primary hover:bg-white/90"
+          className="w-full h-14 text-base font-semibold bg-neutral-900 text-white hover:bg-neutral-800 shadow-sm"
         >
           {t('continue')}
         </Button>

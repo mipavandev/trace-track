@@ -16,13 +16,13 @@ export function MobileLayout({
 }: MobileLayoutProps) {
   return (
     <div className={cn(
-      "min-h-screen bg-background",
+      "min-h-screen bg-neutral-50",
       "max-w-md mx-auto relative",
-      showSafeArea && "pt-safe-top pb-safe-bottom",
+      showSafeArea && "safe-area",
       className
     )}>
       {header && (
-        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b">
+        <div className="sticky top-0 z-50 glass border-b border-neutral-200/50">
           {header}
         </div>
       )}
