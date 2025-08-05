@@ -6,9 +6,10 @@ import { Dashboard } from '@/pages/Dashboard';
 import { ReportLost } from '@/pages/ReportLost';
 import { Settings } from '@/pages/Settings';
 import { Notifications } from '@/pages/Notifications';
+import { Search } from '@/pages/Search';
 import { useToast } from '@/hooks/use-toast';
 
-type Screen = 'onboarding' | 'dashboard' | 'reportLost' | 'report-lost' | 'settings' | 'notifications' | 'report-found' | 'track-claim' | 'map';
+type Screen = 'onboarding' | 'dashboard' | 'reportLost' | 'report-lost' | 'settings' | 'notifications' | 'search' | 'report-found' | 'track-claim' | 'map';
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
@@ -43,7 +44,7 @@ const Index = () => {
         setCurrentScreen('settings');
         break;
       case 'search':
-        // TODO: Add search functionality
+        setCurrentScreen('search');
         break;
     }
   };
@@ -78,6 +79,10 @@ const Index = () => {
       
       case 'notifications':
         return <Notifications onBack={() => setCurrentScreen('dashboard')} />;
+      
+      case 'search':
+        return <Search onBack={() => setCurrentScreen('dashboard')} />;
+      
       
       case 'report-found':
         toast({
@@ -114,6 +119,7 @@ const Index = () => {
       case 'reportLost': return 'report';
       case 'report-lost': return 'report';
       case 'notifications': return 'notifications';
+      case 'search': return 'search';
       case 'settings': return 'settings';
       default: return 'dashboard';
     }
