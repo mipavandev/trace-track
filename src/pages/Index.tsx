@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LanguageProvider } from '@/components/LanguageContext';
+import { BottomNavbar } from '@/components/BottomNavbar';
 import { Onboarding } from '@/pages/Onboarding';
 import { Dashboard } from '@/pages/Dashboard';
 import { ReportLost } from '@/pages/ReportLost';
@@ -7,7 +8,7 @@ import { Settings } from '@/pages/Settings';
 import { Notifications } from '@/pages/Notifications';
 import { useToast } from '@/hooks/use-toast';
 
-type Screen = 'onboarding' | 'dashboard' | 'report-lost' | 'settings' | 'notifications' | 'report-found' | 'track-claim' | 'map';
+type Screen = 'onboarding' | 'dashboard' | 'reportLost' | 'report-lost' | 'settings' | 'notifications' | 'report-found' | 'track-claim' | 'map';
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
@@ -27,6 +28,26 @@ const Index = () => {
     setCurrentScreen(screen);
   };
 
+  const handleBottomNavChange = (tab: string) => {
+    switch (tab) {
+      case 'dashboard':
+        setCurrentScreen('dashboard');
+        break;
+      case 'report':
+        setCurrentScreen('reportLost');
+        break;
+      case 'notifications':
+        setCurrentScreen('notifications');
+        break;
+      case 'settings':
+        setCurrentScreen('settings');
+        break;
+      case 'search':
+        // TODO: Add search functionality
+        break;
+    }
+  };
+
   const handleSubmitReport = () => {
     toast({
       title: "Report Submitted Successfully! ✅",
@@ -44,6 +65,7 @@ const Index = () => {
         return <Dashboard onNavigate={handleNavigate} />;
       
       case 'report-lost':
+      case 'reportLost':
         return (
           <ReportLost 
             onBack={() => setCurrentScreen('dashboard')} 
@@ -86,10 +108,27 @@ const Index = () => {
     }
   };
 
+  const getActiveTab = () => {
+    switch (currentScreen) {
+      case 'dashboard': return 'dashboard';
+      case 'reportLost': return 'report';
+      case 'report-lost': return 'report';
+      case 'notifications': return 'notifications';
+      case 'settings': return 'settings';
+      default: return 'dashboard';
+    }
+  };
+
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-background to-muted/10">
         {renderScreen()}
+        {hasOnboarded && (
+          <BottomNavbar 
+            activeTab={getActiveTab()} 
+            onTabChange={handleBottomNavChange}
+          />
+        )}
       </div>
     </LanguageProvider>
   );

@@ -162,7 +162,7 @@ export function Settings({ onBack }: SettingsProps) {
         </div>
 
         {/* App Version */}
-        <div className="text-center pt-8">
+        <div className="text-center pt-8 pb-8">
           <p className="text-sm text-muted-foreground">
             TraceTrack v1.0.0
           </p>
