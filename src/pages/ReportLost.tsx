@@ -158,10 +158,10 @@ export function ReportLost({ onBack, onSubmit }: ReportLostProps) {
         </div>
 
         {/* Submit Button */}
-        <div className="space-y-3 pt-4 pb-8">
+        <div className="space-y-3 pt-4">
           <Button 
             onClick={onSubmit}
-            className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-lg"
+            className="w-full h-12 text-lg font-semibold bg-gradient-primary"
             disabled={!selectedCategory}
           >
             Submit Report
