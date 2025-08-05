@@ -7,9 +7,12 @@ import { ReportLost } from '@/pages/ReportLost';
 import { Settings } from '@/pages/Settings';
 import { Notifications } from '@/pages/Notifications';
 import { Search } from '@/pages/Search';
+import { ReportFound } from '@/pages/ReportFound';
+import { TrackClaim } from '@/pages/TrackClaim';
+import { NearbyDepots } from '@/pages/NearbyDepots';
 import { useToast } from '@/hooks/use-toast';
 
-type Screen = 'onboarding' | 'dashboard' | 'reportLost' | 'report-lost' | 'settings' | 'notifications' | 'search' | 'report-found' | 'track-claim' | 'map';
+type Screen = 'onboarding' | 'dashboard' | 'reportLost' | 'report-lost' | 'settings' | 'notifications' | 'search' | 'report-found' | 'track-claim' | 'nearby-depots' | 'map';
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
@@ -83,22 +86,21 @@ const Index = () => {
       case 'search':
         return <Search onBack={() => setCurrentScreen('dashboard')} />;
       
-      
       case 'report-found':
-        toast({
-          title: "Feature Coming Soon! 🚧",
-          description: "Report found items feature is in development.",
-        });
-        setCurrentScreen('dashboard');
-        return null;
+        return (
+          <ReportFound 
+            onBack={() => setCurrentScreen('dashboard')} 
+            onSubmit={handleSubmitReport}
+          />
+        );
       
       case 'track-claim':
-        toast({
-          title: "Feature Coming Soon! 🚧", 
-          description: "Track claim feature is in development.",
-        });
-        setCurrentScreen('dashboard');
-        return null;
+        return <TrackClaim onBack={() => setCurrentScreen('dashboard')} />;
+      
+      case 'nearby-depots':
+        return <NearbyDepots onBack={() => setCurrentScreen('dashboard')} />;
+      
+      
       
       case 'map':
         toast({
