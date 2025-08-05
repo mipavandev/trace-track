@@ -16,17 +16,17 @@ export function MobileLayout({
 }: MobileLayoutProps) {
   return (
     <div className={cn(
-      "min-h-screen bg-neutral-50",
+      "min-h-screen bg-gradient-to-br from-background to-muted/20",
       "max-w-md mx-auto relative",
       showSafeArea && "safe-area",
       className
     )}>
       {header && (
-        <div className="sticky top-0 z-50 glass border-b border-neutral-200/50">
+        <div className="sticky top-0 z-50 glass border-b border-border/20">
           {header}
         </div>
       )}
-      <div className="relative">
+      <div className="relative pb-24">
         {children}
       </div>
     </div>

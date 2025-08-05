@@ -175,14 +175,19 @@ All colors MUST be HSL.
 
   /* Glass effect */
   .glass {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .dark .glass {
-    background: rgba(24, 24, 27, 0.9);
+    background: rgba(24, 24, 27, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Safe area for mobile */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* Subtle gradients */

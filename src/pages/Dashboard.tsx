@@ -151,7 +151,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
               description="Find locations"
               variant="rose"
               size="sm"
-              onClick={() => onNavigate('map')}
+              onClick={() => onNavigate('nearby-depots')}
             />
           </div>
         </div>
